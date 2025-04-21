@@ -2,39 +2,23 @@
 #include <unistd.h>
 #include <fcntl.h>
 #include <string>
-#include <android/log.h>
 #include <sys/system_properties.h>
 
 #include "zygisk.hpp"
+#include "hook.hpp"
+#include "log.hpp"
 
 using zygisk::Api;
 using zygisk::AppSpecializeArgs;
 using zygisk::ServerSpecializeArgs;
 
-#define LOGD(...) __android_log_print(ANDROID_LOG_DEBUG, "MyModule", __VA_ARGS__)
+std::atomic_uint_least32_t serial;
 
-struct prop_info {
-    std::atomic_uint_least32_t serial;
-    char value[PROP_VALUE_MAX];
-    char name[0];
-};
+static jint (*orig_logger_entry_max)(JNIEnv *env);
 
-using func_callback = void(void *cookie, const char *name, const char *value, uint32_t serial);
-
-void proxy_system_property_read_callback(const prop_info *pi, func_callback *callback_func,
-                                         void *cookie) {
-    LOGD("proxy_system_property_read_callback [%s]: [%s]", pi->name, pi->value);
-
-    /*if (strstr(pi->name, "ro.product.model")
-        || strstr(pi->name, "ro.product.brand")
-        || strstr(pi->name, "ro.product.manufacturer")) {
-
-
-        char *new_value = "";
-        return callbackFunc(cookie, pi->name, new_value, pi->serial);
-    }*/
-
-    return callback_func(cookie, pi->name, pi->value, pi->serial);
+static jint my_logger_entry_max(JNIEnv *env) {
+    LOGD("my_logger LOG");
+    return orig_logger_entry_max(env);
 }
 
 class MyModule : public zygisk::ModuleBase {
@@ -66,36 +50,27 @@ private:
         int fd = api->connectCompanion();
         read(fd, &r, sizeof(r));
         close(fd);
-        LOGD("process=[%s], r=[%u]\n", process, r);
+        LOGD("preSpecialize process=[%s], r=[%u]\n", process, r);
 
-        hook_system_property_read_callback(process);
+        //if (!strcmp(process, "system_server")) {
+            LOGD("hook start");
+            hook(api, process);
+            LOGD("hook finish");
+        //}
+
+        LOGD("hook jni start");
+        JNINativeMethod methods[] = {
+                { "logger_entry_max_payload_native", "()I", (void*) my_logger_entry_max },
+        };
+        api->hookJniNativeMethods(env, "android/util/Log", methods, 1);
+        *(void **) &orig_logger_entry_max = methods[0].fnPtr;
+        LOGD("hook jni finish");
+
+        bool result = api->pltHookCommit();
+        LOGD("hook result in %s, pltHook result: %d", process, result);
 
         // Since we do not hook any functions, we should let Zygisk dlclose ourselves
         api->setOption(zygisk::Option::DLCLOSE_MODULE_LIBRARY);
-    }
-
-    void hook_system_property_read_callback(const char *process) {
-        int apiLevel = android_get_device_api_level();
-#if apiLevel >= 26
-        LOGD("Hello api 26+");
-#else
-        LOGD("Android Api: %d", apiLevel);
-#endif
-        api->setOption(zygisk::Option::DLCLOSE_MODULE_LIBRARY);
-        LOGD("hook_system_property_read_callback %s, pltHook start", process);
-
-        struct stat st{};
-        if (stat("/apex/com.android.runtime/lib64/bionic/libc.so", &st) == 0) {
-            dev_t dev = st.st_dev;
-            ino_t inode = st.st_ino;
-            LOGD("hook_system_property_read_callback stat libc.so, dev=%ld, inode=%ld", dev, inode);
-            api->pltHookRegister(dev, inode, "__system_property_read_callback",
-                                 (void *) proxy_system_property_read_callback,
-                                 nullptr);
-        }
-
-        bool result = api->pltHookCommit();
-        LOGD("hook_system_property_read_callback %s, pltHook result: %d", process, result);
     }
 };
 
