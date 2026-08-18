@@ -1,0 +1,1037 @@
+[
+  {
+    "brandName": "Samsung",
+    "models": [
+      {
+        "name": "Samsung Galaxy S24 Ultra",
+        "manufacturer": "Samsung",
+        "brand": "samsung",
+        "model": "SM-S9280",
+        "device": "e3q",
+        "product": "e3qzh"
+      },
+      {
+        "name": "Samsung Galaxy S24+",
+        "manufacturer": "Samsung",
+        "brand": "samsung",
+        "model": "SM-S9260",
+        "device": "e2q",
+        "product": "e2qzh"
+      },
+      {
+        "name": "Samsung Galaxy S24",
+        "manufacturer": "Samsung",
+        "brand": "samsung",
+        "model": "SM-S9210",
+        "device": "e1q",
+        "product": "e1qzh"
+      },
+      {
+        "name": "Samsung Galaxy S23 Ultra",
+        "manufacturer": "Samsung",
+        "brand": "samsung",
+        "model": "SM-S9180",
+        "device": "dm3q",
+        "product": "dm3qzh"
+      },
+      {
+        "name": "Samsung Galaxy S23+",
+        "manufacturer": "Samsung",
+        "brand": "samsung",
+        "model": "SM-S9160",
+        "device": "dm2q",
+        "product": "dm2qzh"
+      },
+      {
+        "name": "Samsung Galaxy S23",
+        "manufacturer": "Samsung",
+        "brand": "samsung",
+        "model": "SM-S9110",
+        "device": "dm1q",
+        "product": "dm1qzh"
+      },
+      {
+        "name": "Samsung Galaxy Z Fold6",
+        "manufacturer": "Samsung",
+        "brand": "samsung",
+        "model": "SM-F9560",
+        "device": "q6q",
+        "product": "q6qzh"
+      },
+      {
+        "name": "Samsung Galaxy Z Flip6",
+        "manufacturer": "Samsung",
+        "brand": "samsung",
+        "model": "SM-F7410",
+        "device": "b6q",
+        "product": "b6qzh"
+      },
+      {
+        "name": "Samsung Galaxy Z Fold5",
+        "manufacturer": "Samsung",
+        "brand": "samsung",
+        "model": "SM-F9460",
+        "device": "q5q",
+        "product": "q5qzh"
+      },
+      {
+        "name": "Samsung Galaxy S22 Ultra",
+        "manufacturer": "Samsung",
+        "brand": "samsung",
+        "model": "SM-S9080",
+        "device": "b0q",
+        "product": "b0qzh"
+      },
+      {
+        "name": "Samsung Galaxy Note 20 Ultra",
+        "manufacturer": "Samsung",
+        "brand": "samsung",
+        "model": "SM-N9860",
+        "device": "c2q",
+        "product": "c2qzh"
+      }
+    ]
+  },
+  {
+    "brandName": "Xiaomi",
+    "models": [
+      {
+        "name": "Xiaomi 15 Pro",
+        "manufacturer": "Xiaomi",
+        "brand": "Xiaomi",
+        "model": "24101PNB7C",
+        "device": "haotian",
+        "product": "haotian"
+      },
+      {
+        "name": "Xiaomi 15",
+        "manufacturer": "Xiaomi",
+        "brand": "Xiaomi",
+        "model": "24129PN74C",
+        "device": "dada",
+        "product": "dada"
+      },
+      {
+        "name": "Xiaomi 14 Ultra",
+        "manufacturer": "Xiaomi",
+        "brand": "Xiaomi",
+        "model": "24030PN60C",
+        "device": "aurora",
+        "product": "aurora"
+      },
+      {
+        "name": "Xiaomi 14 Pro",
+        "manufacturer": "Xiaomi",
+        "brand": "Xiaomi",
+        "model": "23116PN5BC",
+        "device": "shennong",
+        "product": "shennong"
+      },
+      {
+        "name": "Xiaomi 14",
+        "manufacturer": "Xiaomi",
+        "brand": "Xiaomi",
+        "model": "23127PN0CC",
+        "device": "houji",
+        "product": "houji"
+      },
+      {
+        "name": "Xiaomi 13 Ultra",
+        "manufacturer": "Xiaomi",
+        "brand": "Xiaomi",
+        "model": "2304FPN6DC",
+        "device": "ishtar",
+        "product": "ishtar"
+      },
+      {
+        "name": "Xiaomi 13 Pro",
+        "manufacturer": "Xiaomi",
+        "brand": "Xiaomi",
+        "model": "2210132C",
+        "device": "nuwa",
+        "product": "nuwa"
+      },
+      {
+        "name": "Xiaomi 13",
+        "manufacturer": "Xiaomi",
+        "brand": "Xiaomi",
+        "model": "2211133C",
+        "device": "fuxi",
+        "product": "fuxi"
+      },
+      {
+        "name": "Xiaomi MIX Fold 4",
+        "manufacturer": "Xiaomi",
+        "brand": "Xiaomi",
+        "model": "24072PX77C",
+        "device": "goku",
+        "product": "goku"
+      },
+      {
+        "name": "Xiaomi MIX Flip",
+        "manufacturer": "Xiaomi",
+        "brand": "Xiaomi",
+        "model": "2405CPX3DC",
+        "device": "ruyi",
+        "product": "ruyi"
+      },
+      {
+        "name": "Xiaomi 12S Ultra",
+        "manufacturer": "Xiaomi",
+        "brand": "Xiaomi",
+        "model": "2203121C",
+        "device": "thor",
+        "product": "thor"
+      }
+    ]
+  },
+  {
+    "brandName": "Redmi",
+    "models": [
+      {
+        "name": "Redmi K80 Pro",
+        "manufacturer": "Xiaomi",
+        "brand": "Redmi",
+        "model": "24122RKC7C",
+        "device": "miro",
+        "product": "miro"
+      },
+      {
+        "name": "Redmi K80",
+        "manufacturer": "Xiaomi",
+        "brand": "Redmi",
+        "model": "24117RK2CC",
+        "device": "zorn",
+        "product": "zorn"
+      },
+      {
+        "name": "Redmi K70 Pro",
+        "manufacturer": "Xiaomi",
+        "brand": "Redmi",
+        "model": "23117RK66C",
+        "device": "manet",
+        "product": "manet"
+      },
+      {
+        "name": "Redmi K70 Extreme",
+        "manufacturer": "Xiaomi",
+        "brand": "Redmi",
+        "model": "2407FRK8EC",
+        "device": "rothko",
+        "product": "rothko"
+      },
+      {
+        "name": "Redmi K70",
+        "manufacturer": "Xiaomi",
+        "brand": "Redmi",
+        "model": "2311DRK48C",
+        "device": "vermeer",
+        "product": "vermeer"
+      },
+      {
+        "name": "Redmi Turbo 3",
+        "manufacturer": "Xiaomi",
+        "brand": "Redmi",
+        "model": "24069RA21C",
+        "device": "peridot",
+        "product": "peridot"
+      },
+      {
+        "name": "Redmi Note 14 Pro+",
+        "manufacturer": "Xiaomi",
+        "brand": "Redmi",
+        "model": "24090RA29C",
+        "device": "amethyst",
+        "product": "amethyst"
+      },
+      {
+        "name": "Redmi Note 13 Pro+",
+        "manufacturer": "Xiaomi",
+        "brand": "Redmi",
+        "model": "23090RA98C",
+        "device": "zircon",
+        "product": "zircon"
+      },
+      {
+        "name": "Redmi K60 Ultra",
+        "manufacturer": "Xiaomi",
+        "brand": "Redmi",
+        "model": "23078RKD5C",
+        "device": "corot",
+        "product": "corot"
+      }
+    ]
+  },
+  {
+    "brandName": "Huawei",
+    "models": [
+      {
+        "name": "HUAWEI Mate 70 Pro+",
+        "manufacturer": "HUAWEI",
+        "brand": "HUAWEI",
+        "model": "HBN-AL10",
+        "device": "HBN",
+        "product": "HBN-AL10"
+      },
+      {
+        "name": "HUAWEI Mate 70 Pro",
+        "manufacturer": "HUAWEI",
+        "brand": "HUAWEI",
+        "model": "HBN-AL00",
+        "device": "HBN",
+        "product": "HBN-AL00"
+      },
+      {
+        "name": "HUAWEI Mate 70",
+        "manufacturer": "HUAWEI",
+        "brand": "HUAWEI",
+        "model": "HYS-AL00",
+        "device": "HYS",
+        "product": "HYS-AL00"
+      },
+      {
+        "name": "HUAWEI Mate 60 Pro+",
+        "manufacturer": "HUAWEI",
+        "brand": "HUAWEI",
+        "model": "ALN-AL10",
+        "device": "ALN",
+        "product": "ALN-AL10"
+      },
+      {
+        "name": "HUAWEI Mate 60 Pro",
+        "manufacturer": "HUAWEI",
+        "brand": "HUAWEI",
+        "model": "ALN-AL00",
+        "device": "ALN",
+        "product": "ALN-AL00"
+      },
+      {
+        "name": "HUAWEI Mate 60",
+        "manufacturer": "HUAWEI",
+        "brand": "HUAWEI",
+        "model": "BRA-AL00",
+        "device": "BRA",
+        "product": "BRA-AL00"
+      },
+      {
+        "name": "HUAWEI Pura 70 Ultra",
+        "manufacturer": "HUAWEI",
+        "brand": "HUAWEI",
+        "model": "HBP-AL00",
+        "device": "HBP",
+        "product": "HBP-AL00"
+      },
+      {
+        "name": "HUAWEI Pura 70 Pro+",
+        "manufacturer": "HUAWEI",
+        "brand": "HUAWEI",
+        "model": "HBN-AL80",
+        "device": "HBN",
+        "product": "HBN-AL80"
+      },
+      {
+        "name": "HUAWEI Pura 70 Pro",
+        "manufacturer": "HUAWEI",
+        "brand": "HUAWEI",
+        "model": "HBN-AL10",
+        "device": "HBN",
+        "product": "HBN-AL10"
+      },
+      {
+        "name": "HUAWEI Pura 70",
+        "manufacturer": "HUAWEI",
+        "brand": "HUAWEI",
+        "model": "ADY-AL00",
+        "device": "ADY",
+        "product": "ADY-AL00"
+      },
+      {
+        "name": "HUAWEI Mate X5",
+        "manufacturer": "HUAWEI",
+        "brand": "HUAWEI",
+        "model": "ALT-AL10",
+        "device": "ALT",
+        "product": "ALT-AL10"
+      },
+      {
+        "name": "HUAWEI Mate XT Ultimate",
+        "manufacturer": "HUAWEI",
+        "brand": "HUAWEI",
+        "model": "GND-AL00",
+        "device": "GND",
+        "product": "GND-AL00"
+      }
+    ]
+  },
+  {
+    "brandName": "HONOR",
+    "models": [
+      {
+        "name": "HONOR Magic 7 Pro",
+        "manufacturer": "HONOR",
+        "brand": "HONOR",
+        "model": "PTP-AN10",
+        "device": "PTP",
+        "product": "PTP-AN10"
+      },
+      {
+        "name": "HONOR Magic 7",
+        "manufacturer": "HONOR",
+        "brand": "HONOR",
+        "model": "PTP-AN00",
+        "device": "PTP",
+        "product": "PTP-AN00"
+      },
+      {
+        "name": "HONOR Magic 6 Pro",
+        "manufacturer": "HONOR",
+        "brand": "HONOR",
+        "model": "BVL-AN16",
+        "device": "BVL",
+        "product": "BVL-AN16"
+      },
+      {
+        "name": "HONOR Magic 6 Ultimate",
+        "manufacturer": "HONOR",
+        "brand": "HONOR",
+        "model": "BVL-AN20",
+        "device": "BVL",
+        "product": "BVL-AN20"
+      },
+      {
+        "name": "HONOR Magic 6",
+        "manufacturer": "HONOR",
+        "brand": "HONOR",
+        "model": "BVL-AN00",
+        "device": "BVL",
+        "product": "BVL-AN00"
+      },
+      {
+        "name": "HONOR Magic V3",
+        "manufacturer": "HONOR",
+        "brand": "HONOR",
+        "model": "FCP-AN10",
+        "device": "FCP",
+        "product": "FCP-AN10"
+      },
+      {
+        "name": "HONOR 200 Pro",
+        "manufacturer": "HONOR",
+        "brand": "HONOR",
+        "model": "ELI-AN00",
+        "device": "ELI",
+        "product": "ELI-AN00"
+      },
+      {
+        "name": "HONOR 100 Pro",
+        "manufacturer": "HONOR",
+        "brand": "HONOR",
+        "model": "MAA-AN10",
+        "device": "MAA",
+        "product": "MAA-AN10"
+      },
+      {
+        "name": "HONOR Magic 5 Pro",
+        "manufacturer": "HONOR",
+        "brand": "HONOR",
+        "model": "PGT-AN10",
+        "device": "PGT",
+        "product": "PGT-AN10"
+      }
+    ]
+  },
+  {
+    "brandName": "vivo",
+    "models": [
+      {
+        "name": "vivo X200 Pro",
+        "manufacturer": "vivo",
+        "brand": "vivo",
+        "model": "V2415A",
+        "device": "PD2415",
+        "product": "PD2415"
+      },
+      {
+        "name": "vivo X200 Pro mini",
+        "manufacturer": "vivo",
+        "brand": "vivo",
+        "model": "V2405A",
+        "device": "PD2405",
+        "product": "PD2405"
+      },
+      {
+        "name": "vivo X200",
+        "manufacturer": "vivo",
+        "brand": "vivo",
+        "model": "V2413A",
+        "device": "PD2413",
+        "product": "PD2413"
+      },
+      {
+        "name": "vivo X100 Ultra",
+        "manufacturer": "vivo",
+        "brand": "vivo",
+        "model": "V2366GA",
+        "device": "PD2366",
+        "product": "PD2366"
+      },
+      {
+        "name": "vivo X100s Pro",
+        "manufacturer": "vivo",
+        "brand": "vivo",
+        "model": "V2359A",
+        "device": "PD2359",
+        "product": "PD2359"
+      },
+      {
+        "name": "vivo X100 Pro",
+        "manufacturer": "vivo",
+        "brand": "vivo",
+        "model": "V2324A",
+        "device": "PD2324",
+        "product": "PD2324"
+      },
+      {
+        "name": "vivo X100",
+        "manufacturer": "vivo",
+        "brand": "vivo",
+        "model": "V2309A",
+        "device": "PD2309",
+        "product": "PD2309"
+      },
+      {
+        "name": "vivo X Fold3 Pro",
+        "manufacturer": "vivo",
+        "brand": "vivo",
+        "model": "V2337A",
+        "device": "PD2337",
+        "product": "PD2337"
+      },
+      {
+        "name": "vivo X Fold3",
+        "manufacturer": "vivo",
+        "brand": "vivo",
+        "model": "V2303A",
+        "device": "PD2303",
+        "product": "PD2303"
+      },
+      {
+        "name": "vivo X90 Pro+",
+        "manufacturer": "vivo",
+        "brand": "vivo",
+        "model": "V2227A",
+        "device": "PD2227",
+        "product": "PD2227"
+      }
+    ]
+  },
+  {
+    "brandName": "iQOO",
+    "models": [
+      {
+        "name": "iQOO 13",
+        "manufacturer": "vivo",
+        "brand": "iQOO",
+        "model": "V2408A",
+        "device": "PD2408",
+        "product": "PD2408"
+      },
+      {
+        "name": "iQOO 12 Pro",
+        "manufacturer": "vivo",
+        "brand": "iQOO",
+        "model": "V2329A",
+        "device": "PD2329",
+        "product": "PD2329"
+      },
+      {
+        "name": "iQOO 12",
+        "manufacturer": "vivo",
+        "brand": "iQOO",
+        "model": "V2307A",
+        "device": "PD2307",
+        "product": "PD2307"
+      },
+      {
+        "name": "iQOO Neo9S Pro+",
+        "manufacturer": "vivo",
+        "brand": "iQOO",
+        "model": "V2403A",
+        "device": "PD2403",
+        "product": "PD2403"
+      },
+      {
+        "name": "iQOO Neo9 Pro",
+        "manufacturer": "vivo",
+        "brand": "iQOO",
+        "model": "V2339A",
+        "device": "PD2339",
+        "product": "PD2339"
+      },
+      {
+        "name": "iQOO Neo9",
+        "manufacturer": "vivo",
+        "brand": "iQOO",
+        "model": "V2338A",
+        "device": "PD2338",
+        "product": "PD2338"
+      },
+      {
+        "name": "iQOO 11 Pro",
+        "manufacturer": "vivo",
+        "brand": "iQOO",
+        "model": "V2243A",
+        "device": "PD2243",
+        "product": "PD2243"
+      }
+    ]
+  },
+  {
+    "brandName": "OPPO",
+    "models": [
+      {
+        "name": "OPPO Find X8 Pro",
+        "manufacturer": "OPPO",
+        "brand": "OPPO",
+        "model": "PKC110",
+        "device": "OP5A95L1",
+        "product": "PKC110"
+      },
+      {
+        "name": "OPPO Find X8",
+        "manufacturer": "OPPO",
+        "brand": "OPPO",
+        "model": "PKB110",
+        "device": "OP5A75L1",
+        "product": "PKB110"
+      },
+      {
+        "name": "OPPO Find X7 Ultra",
+        "manufacturer": "OPPO",
+        "brand": "OPPO",
+        "model": "PHY110",
+        "device": "OP595BL1",
+        "product": "PHY110"
+      },
+      {
+        "name": "OPPO Find X7",
+        "manufacturer": "OPPO",
+        "brand": "OPPO",
+        "model": "PHZ110",
+        "device": "OP597DL1",
+        "product": "PHZ110"
+      },
+      {
+        "name": "OPPO Find N3",
+        "manufacturer": "OPPO",
+        "brand": "OPPO",
+        "model": "PHY110",
+        "device": "OP595BL1",
+        "product": "PHY110"
+      },
+      {
+        "name": "OPPO Find N3 Flip",
+        "manufacturer": "OPPO",
+        "brand": "OPPO",
+        "model": "PHT110",
+        "device": "OP5945L1",
+        "product": "PHT110"
+      },
+      {
+        "name": "OPPO Reno 12 Pro",
+        "manufacturer": "OPPO",
+        "brand": "OPPO",
+        "model": "PJL110",
+        "device": "OP5B37L1",
+        "product": "PJL110"
+      },
+      {
+        "name": "OPPO Find X6 Pro",
+        "manufacturer": "OPPO",
+        "brand": "OPPO",
+        "model": "PGEM10",
+        "device": "OP5567L1",
+        "product": "PGEM10"
+      }
+    ]
+  },
+  {
+    "brandName": "OnePlus",
+    "models": [
+      {
+        "name": "OnePlus 13",
+        "manufacturer": "OnePlus",
+        "brand": "OnePlus",
+        "model": "PJZ110",
+        "device": "OP5D45L1",
+        "product": "PJZ110"
+      },
+      {
+        "name": "OnePlus 12",
+        "manufacturer": "OnePlus",
+        "brand": "OnePlus",
+        "model": "PJD110",
+        "device": "OP594DL1",
+        "product": "PJD110"
+      },
+      {
+        "name": "OnePlus Ace 3 Pro",
+        "manufacturer": "OnePlus",
+        "brand": "OnePlus",
+        "model": "PJX110",
+        "device": "OP5B4DL1",
+        "product": "PJX110"
+      },
+      {
+        "name": "OnePlus Ace 3",
+        "manufacturer": "OnePlus",
+        "brand": "OnePlus",
+        "model": "PJE110",
+        "device": "OP5A3BL1",
+        "product": "PJE110"
+      },
+      {
+        "name": "OnePlus Ace 2 Pro",
+        "manufacturer": "OnePlus",
+        "brand": "OnePlus",
+        "model": "PJA110",
+        "device": "OP592BL1",
+        "product": "PJA110"
+      },
+      {
+        "name": "OnePlus 11",
+        "manufacturer": "OnePlus",
+        "brand": "OnePlus",
+        "model": "PHB110",
+        "device": "OP5561L1",
+        "product": "PHB110"
+      },
+      {
+        "name": "OnePlus Open",
+        "manufacturer": "OnePlus",
+        "brand": "OnePlus",
+        "model": "CPH2551",
+        "device": "OP595FL1",
+        "product": "CPH2551"
+      }
+    ]
+  },
+  {
+    "brandName": "Google Pixel",
+    "models": [
+      {
+        "name": "Google Pixel 9 Pro XL",
+        "manufacturer": "Google",
+        "brand": "google",
+        "model": "Pixel 9 Pro XL",
+        "device": "komodo",
+        "product": "komodo"
+      },
+      {
+        "name": "Google Pixel 9 Pro",
+        "manufacturer": "Google",
+        "brand": "google",
+        "model": "Pixel 9 Pro",
+        "device": "caiman",
+        "product": "caiman"
+      },
+      {
+        "name": "Google Pixel 9",
+        "manufacturer": "Google",
+        "brand": "google",
+        "model": "Pixel 9",
+        "device": "tokay",
+        "product": "tokay"
+      },
+      {
+        "name": "Google Pixel 9 Pro Fold",
+        "manufacturer": "Google",
+        "brand": "google",
+        "model": "Pixel 9 Pro Fold",
+        "device": "comet",
+        "product": "comet"
+      },
+      {
+        "name": "Google Pixel 8 Pro",
+        "manufacturer": "Google",
+        "brand": "google",
+        "model": "Pixel 8 Pro",
+        "device": "husky",
+        "product": "husky"
+      },
+      {
+        "name": "Google Pixel 8",
+        "manufacturer": "Google",
+        "brand": "google",
+        "model": "Pixel 8",
+        "device": "shiba",
+        "product": "shiba"
+      },
+      {
+        "name": "Google Pixel 8a",
+        "manufacturer": "Google",
+        "brand": "google",
+        "model": "Pixel 8a",
+        "device": "akita",
+        "product": "akita"
+      },
+      {
+        "name": "Google Pixel 7 Pro",
+        "manufacturer": "Google",
+        "brand": "google",
+        "model": "Pixel 7 Pro",
+        "device": "cheetah",
+        "product": "cheetah"
+      },
+      {
+        "name": "Google Pixel 7",
+        "manufacturer": "Google",
+        "brand": "google",
+        "model": "Pixel 7",
+        "device": "panther",
+        "product": "panther"
+      },
+      {
+        "name": "Google Pixel 7a",
+        "manufacturer": "Google",
+        "brand": "google",
+        "model": "Pixel 7a",
+        "device": "lynx",
+        "product": "lynx"
+      },
+      {
+        "name": "Google Pixel Fold",
+        "manufacturer": "Google",
+        "brand": "google",
+        "model": "Pixel Fold",
+        "device": "felix",
+        "product": "felix"
+      },
+      {
+        "name": "Google Pixel 6 Pro",
+        "manufacturer": "Google",
+        "brand": "google",
+        "model": "Pixel 6 Pro",
+        "device": "raven",
+        "product": "raven"
+      }
+    ]
+  },
+  {
+    "brandName": "Apple",
+    "models": [
+      {
+        "name": "iPhone 16 Pro Max",
+        "manufacturer": "Apple",
+        "brand": "Apple",
+        "model": "iPhone17,2",
+        "device": "iPhone16ProMax",
+        "product": "iPhone17,2"
+      },
+      {
+        "name": "iPhone 16 Pro",
+        "manufacturer": "Apple",
+        "brand": "Apple",
+        "model": "iPhone17,1",
+        "device": "iPhone16Pro",
+        "product": "iPhone17,1"
+      },
+      {
+        "name": "iPhone 16",
+        "manufacturer": "Apple",
+        "brand": "Apple",
+        "model": "iPhone17,3",
+        "device": "iPhone16",
+        "product": "iPhone17,3"
+      },
+      {
+        "name": "iPhone 15 Pro Max",
+        "manufacturer": "Apple",
+        "brand": "Apple",
+        "model": "iPhone16,2",
+        "device": "iPhone15ProMax",
+        "product": "iPhone16,2"
+      },
+      {
+        "name": "iPhone 15 Pro",
+        "manufacturer": "Apple",
+        "brand": "Apple",
+        "model": "iPhone16,1",
+        "device": "iPhone15Pro",
+        "product": "iPhone16,1"
+      },
+      {
+        "name": "iPhone 15",
+        "manufacturer": "Apple",
+        "brand": "Apple",
+        "model": "iPhone15,4",
+        "device": "iPhone15",
+        "product": "iPhone15,4"
+      },
+      {
+        "name": "iPhone 14 Pro Max",
+        "manufacturer": "Apple",
+        "brand": "Apple",
+        "model": "iPhone15,3",
+        "device": "iPhone14ProMax",
+        "product": "iPhone15,3"
+      },
+      {
+        "name": "iPad Pro 13 (M4)",
+        "manufacturer": "Apple",
+        "brand": "Apple",
+        "model": "iPad16,5",
+        "device": "iPadPro13M4",
+        "product": "iPad16,5"
+      }
+    ]
+  },
+  {
+    "brandName": "Meizu",
+    "models": [
+      {
+        "name": "Meizu 21 PRO",
+        "manufacturer": "Meizu",
+        "brand": "Meizu",
+        "model": "MEIZU 21 PRO",
+        "device": "meizu21pro",
+        "product": "meizu21pro"
+      },
+      {
+        "name": "Meizu 21",
+        "manufacturer": "Meizu",
+        "brand": "Meizu",
+        "model": "MEIZU 21",
+        "device": "meizu21",
+        "product": "meizu21"
+      },
+      {
+        "name": "Meizu 20 PRO",
+        "manufacturer": "Meizu",
+        "brand": "Meizu",
+        "model": "MEIZU 20 PRO",
+        "device": "meizu20pro",
+        "product": "meizu20pro"
+      },
+      {
+        "name": "Meizu 20 INFINITY",
+        "manufacturer": "Meizu",
+        "brand": "Meizu",
+        "model": "MEIZU 20 INFINITY",
+        "device": "meizu20infinity",
+        "product": "meizu20infinity"
+      },
+      {
+        "name": "Meizu 20",
+        "manufacturer": "Meizu",
+        "brand": "Meizu",
+        "model": "MEIZU 20",
+        "device": "meizu20",
+        "product": "meizu20"
+      }
+    ]
+  },
+  {
+    "brandName": "Sony",
+    "models": [
+      {
+        "name": "Sony Xperia 1 VI",
+        "manufacturer": "Sony",
+        "brand": "Sony",
+        "model": "XQ-EC72",
+        "device": "XQ-EC72",
+        "product": "PDX-245"
+      },
+      {
+        "name": "Sony Xperia 1 V",
+        "manufacturer": "Sony",
+        "brand": "Sony",
+        "model": "XQ-DQ72",
+        "device": "XQ-DQ72",
+        "product": "PDX-234"
+      },
+      {
+        "name": "Sony Xperia 5 V",
+        "manufacturer": "Sony",
+        "brand": "Sony",
+        "model": "XQ-DE72",
+        "device": "XQ-DE72",
+        "product": "PDX-237"
+      },
+      {
+        "name": "Sony Xperia 1 IV",
+        "manufacturer": "Sony",
+        "brand": "Sony",
+        "model": "XQ-CT72",
+        "device": "XQ-CT72",
+        "product": "PDX-223"
+      },
+      {
+        "name": "Sony Xperia PRO-I",
+        "manufacturer": "Sony",
+        "brand": "Sony",
+        "model": "XQ-BE72",
+        "device": "XQ-BE72",
+        "product": "PDX-214"
+      }
+    ]
+  },
+  {
+    "brandName": "ASUS ROG",
+    "models": [
+      {
+        "name": "ASUS ROG Phone 9 Pro",
+        "manufacturer": "ASUS",
+        "brand": "asus",
+        "model": "ASUS_AI2501_D",
+        "device": "AI2501",
+        "product": "AI2501"
+      },
+      {
+        "name": "ASUS ROG Phone 8 Pro",
+        "manufacturer": "ASUS",
+        "brand": "asus",
+        "model": "ASUS_AI2401_A",
+        "device": "AI2401",
+        "product": "AI2401"
+      },
+      {
+        "name": "ASUS ROG Phone 7 Ultimate",
+        "manufacturer": "ASUS",
+        "brand": "asus",
+        "model": "ASUS_AI2205_D",
+        "device": "AI2205",
+        "product": "AI2205"
+      }
+    ]
+  },
+  {
+    "brandName": "RedMagic",
+    "models": [
+      {
+        "name": "RedMagic 10 Pro+",
+        "manufacturer": "nubia",
+        "brand": "nubia",
+        "model": "NX789J",
+        "device": "NX789J",
+        "product": "NX789J"
+      },
+      {
+        "name": "RedMagic 9S Pro",
+        "manufacturer": "nubia",
+        "brand": "nubia",
+        "model": "NX769J_V2",
+        "device": "NX769J",
+        "product": "NX769J"
+      },
+      {
+        "name": "RedMagic 9 Pro",
+        "manufacturer": "nubia",
+        "brand": "nubia",
+        "model": "NX769J",
+        "device": "NX769J",
+        "product": "NX769J"
+      }
+    ]
+  }
+]
