@@ -327,6 +327,61 @@ class AppListViewModel(
     }
 
     /**
+     * Exports current configurations as formatted JSON string.
+     */
+    fun exportConfigJson(onResult: (String) -> Unit) {
+        viewModelScope.launch(ioDispatcher) {
+            val configs = configRepository.loadConfig()
+            val json = ConfigRepository.toJson(configs)
+            onResult(json)
+        }
+    }
+
+    /**
+     * Imports configuration from JSON string and updates Root partition.
+     */
+    fun importConfigJson(jsonContent: String) {
+        viewModelScope.launch(ioDispatcher) {
+            try {
+                val parsed = ConfigRepository.parseJson(jsonContent)
+                if (parsed.isEmpty() && jsonContent.trim() != "{}" && jsonContent.trim() != "{\n}") {
+                    _uiState.update {
+                        it.copy(
+                            statusMessage = "导入失败: JSON 格式错误或未包含有效配置",
+                            isSuccessMessage = false
+                        )
+                    }
+                    return@launch
+                }
+                val result = configRepository.saveConfig(parsed)
+                if (result.isSuccess) {
+                    _uiState.update {
+                        it.copy(
+                            statusMessage = "成功导入 ${parsed.size} 项配置并同步至 Root",
+                            isSuccessMessage = true
+                        )
+                    }
+                    loadData()
+                } else {
+                    _uiState.update {
+                        it.copy(
+                            statusMessage = "保存配置失败: ${result.exceptionOrNull()?.message ?: "未知错误"}",
+                            isSuccessMessage = false
+                        )
+                    }
+                }
+            } catch (e: Exception) {
+                _uiState.update {
+                    it.copy(
+                        statusMessage = "配置文件解析异常: ${e.message}",
+                        isSuccessMessage = false
+                    )
+                }
+            }
+        }
+    }
+
+    /**
      * Clears the current snackbar/status message.
      */
     fun clearStatusMessage() {
