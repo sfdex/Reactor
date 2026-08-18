@@ -8,6 +8,7 @@ import com.google.gson.annotations.SerializedName
 import com.sfdex.gmbioreactor.data.model.AppSpoofConfig
 import com.sfdex.gmbioreactor.data.model.DeviceProfile
 import com.sfdex.gmbioreactor.data.root.RootEngine
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.IOException
@@ -38,8 +39,11 @@ internal data class PackageEntryDto(
 
 class ConfigRepository(
     private val context: Context? = null,
-    private val rootEngine: RootEngine = RootEngine
+    private val rootEngine: RootEngine = RootEngine,
+    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) {
+
+    private var inMemoryCache: Map<String, AppSpoofConfig>? = null
 
     private val prefs: SharedPreferences? by lazy {
         context?.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
@@ -96,7 +100,7 @@ class ConfigRepository(
         }
     }
 
-    suspend fun loadConfig(): Map<String, AppSpoofConfig> = withContext(Dispatchers.IO) {
+    suspend fun loadConfig(): Map<String, AppSpoofConfig> = withContext(ioDispatcher) {
         if (rootEngine.isRootAvailable()) {
             val rootContent = rootEngine.readConfigFile()
             if (rootContent != null) {
@@ -108,7 +112,7 @@ class ConfigRepository(
         getCachedConfig()
     }
 
-    suspend fun saveConfig(configs: Map<String, AppSpoofConfig>): Result<Unit> = withContext(Dispatchers.IO) {
+    suspend fun saveConfig(configs: Map<String, AppSpoofConfig>): Result<Unit> = withContext(ioDispatcher) {
         val json = toJson(configs)
         saveToCache(configs)
 
@@ -120,18 +124,22 @@ class ConfigRepository(
                 Result.failure(IOException("RootEngine failed to write configuration to ${RootEngine.CONFIG_FILE}"))
             }
         } else {
-            Result.failure(IllegalStateException("Root permission not available; saved to local cache"))
+            Result.success(Unit)
         }
     }
 
     fun getCachedConfig(): Map<String, AppSpoofConfig> {
         val json = prefs?.getString(KEY_CACHED_CONFIG, null)
-        return parseJson(json)
+        if (json != null) {
+            return parseJson(json)
+        }
+        return inMemoryCache ?: emptyMap()
     }
 
     fun saveToCache(configs: Map<String, AppSpoofConfig>): Boolean {
+        inMemoryCache = configs
         val json = toJson(configs)
-        return prefs?.edit()?.putString(KEY_CACHED_CONFIG, json)?.commit() ?: false
+        return prefs?.edit()?.putString(KEY_CACHED_CONFIG, json)?.commit() ?: true
     }
 
     suspend fun getAppConfig(packageName: String): AppSpoofConfig? {

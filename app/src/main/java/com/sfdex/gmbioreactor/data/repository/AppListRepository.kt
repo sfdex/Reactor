@@ -14,15 +14,16 @@ data class AppItem(
     val icon: Drawable? = null
 )
 
-class AppListRepository(private val context: Context) {
+open class AppListRepository(private val context: Context? = null) {
 
     /**
      * Retrieves all installed applications, excluding GMBioreactor itself.
      * Sorts user applications first, then alphabetically by app name.
      */
-    fun getInstalledApps(includeIcons: Boolean = true): List<AppItem> {
-        val pm = context.packageManager
-        val selfPackage = context.packageName
+    open fun getInstalledApps(includeIcons: Boolean = true): List<AppItem> {
+        val targetContext = context ?: return emptyList()
+        val pm = targetContext.packageManager
+        val selfPackage = targetContext.packageName
 
         val installedApps = try {
             pm.getInstalledApplications(PackageManager.GET_META_DATA)
@@ -72,9 +73,10 @@ class AppListRepository(private val context: Context) {
     /**
      * Retrieves icon for a specific package name.
      */
-    fun getAppIcon(packageName: String): Drawable? {
+    open fun getAppIcon(packageName: String): Drawable? {
+        val targetContext = context ?: return null
         return try {
-            val pm = context.packageManager
+            val pm = targetContext.packageManager
             val appInfo = pm.getApplicationInfo(packageName, 0)
             appInfo.loadIcon(pm)
         } catch (e: Exception) {

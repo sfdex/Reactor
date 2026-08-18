@@ -66,29 +66,29 @@ class ModelRepository(private val context: Context? = null) {
         return getBrandGroups().flatMap { it.models }
     }
 
+    private var inMemoryCustomProfiles: MutableList<DeviceProfile>? = null
+
     fun getCustomProfiles(ctx: Context? = context): List<DeviceProfile> {
         val sharedPreferences = if (ctx != null && ctx != context) {
             ctx.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
         } else {
             prefs
-        } ?: return emptyList()
+        }
 
-        val json = sharedPreferences.getString(KEY_CUSTOM_PROFILES, null) ?: return emptyList()
+        if (sharedPreferences == null) {
+            return inMemoryCustomProfiles ?: emptyList()
+        }
+
+        val json = sharedPreferences.getString(KEY_CUSTOM_PROFILES, null) ?: return inMemoryCustomProfiles ?: emptyList()
         return try {
             val listType = object : TypeToken<List<DeviceProfile>>() {}.type
-            gson.fromJson(json, listType) ?: emptyList()
+            gson.fromJson(json, listType) ?: (inMemoryCustomProfiles ?: emptyList())
         } catch (e: Exception) {
-            emptyList()
+            inMemoryCustomProfiles ?: emptyList()
         }
     }
 
     fun saveCustomProfile(profile: DeviceProfile, ctx: Context? = context): Boolean {
-        val sharedPreferences = if (ctx != null && ctx != context) {
-            ctx.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
-        } else {
-            prefs
-        } ?: return false
-
         val currentList = getCustomProfiles(ctx).toMutableList()
         // Replace existing profile with same name or add new
         val index = currentList.indexOfFirst { it.name.equals(profile.name, ignoreCase = true) }
@@ -97,21 +97,29 @@ class ModelRepository(private val context: Context? = null) {
         } else {
             currentList.add(profile)
         }
+        inMemoryCustomProfiles = currentList
+
+        val sharedPreferences = if (ctx != null && ctx != context) {
+            ctx.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+        } else {
+            prefs
+        } ?: return true
 
         val json = gson.toJson(currentList)
         return sharedPreferences.edit().putString(KEY_CUSTOM_PROFILES, json).commit()
     }
 
     fun deleteCustomProfile(profileName: String, ctx: Context? = context): Boolean {
+        val currentList = getCustomProfiles(ctx).toMutableList()
+        val removed = currentList.removeAll { it.name.equals(profileName, ignoreCase = true) }
+        if (!removed) return false
+        inMemoryCustomProfiles = currentList
+
         val sharedPreferences = if (ctx != null && ctx != context) {
             ctx.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
         } else {
             prefs
-        } ?: return false
-
-        val currentList = getCustomProfiles(ctx).toMutableList()
-        val removed = currentList.removeAll { it.name.equals(profileName, ignoreCase = true) }
-        if (!removed) return false
+        } ?: return true
 
         val json = gson.toJson(currentList)
         return sharedPreferences.edit().putString(KEY_CUSTOM_PROFILES, json).commit()
