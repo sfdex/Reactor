@@ -175,7 +175,7 @@ object RootEngine {
             .filter { it.isNotEmpty() }
         if (validPkgs.isEmpty()) return true
 
-        val commands = validPkgs.joinToString(" && ") { "am force-stop '$it'" }
+        val commands = validPkgs.joinToString("; ") { "am force-stop '$it'" }
         val result = executeSu(commands)
         return result.isSuccess
     }
