@@ -34,8 +34,7 @@ open class AppListRepository(private val context: Context? = null) {
         return installedApps
             .filter { it.packageName != selfPackage }
             .map { appInfo ->
-                val isSystem = (appInfo.flags and ApplicationInfo.FLAG_SYSTEM) != 0 ||
-                        (appInfo.flags and ApplicationInfo.FLAG_UPDATED_SYSTEM_APP) != 0
+                val isSystem = (appInfo.flags and ApplicationInfo.FLAG_SYSTEM) != 0
                 val appName = try {
                     pm.getApplicationLabel(appInfo).toString()
                 } catch (e: Exception) {
