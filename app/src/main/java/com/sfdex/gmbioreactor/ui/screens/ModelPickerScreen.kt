@@ -575,6 +575,8 @@ fun PickerProfileItemCard(
                             fontSize = 10.sp
                         )
                     }
+                    Spacer(modifier = Modifier.width(4.dp))
+                    OsFeatureBadge(profile)
                 }
                 Spacer(modifier = Modifier.height(2.dp))
                 Text(

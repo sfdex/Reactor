@@ -365,6 +365,8 @@ fun DeviceProfileCard(
                         )
                     }
 
+                    OsFeatureBadge(profile)
+
                     if (isCustom && onEdit != null && onDelete != null) {
                         IconButton(
                             onClick = onEdit,
@@ -607,4 +609,47 @@ fun DeviceProfileEditDialog(
             }
         }
     )
+}
+
+/**
+ * Visual badge for specialized OS simulation (HyperOS / HarmonyOS).
+ */
+@Composable
+fun OsFeatureBadge(profile: DeviceProfile, modifier: Modifier = Modifier) {
+    val b = profile.brand.lowercase()
+    val m = profile.manufacturer.lowercase()
+    val isXiaomi = b.contains("xiaomi") || b.contains("redmi") || m.contains("xiaomi")
+    val isHuawei = b.contains("huawei") || b.contains("honor") || m.contains("huawei") || m.contains("honor")
+
+    if (isXiaomi) {
+        Surface(
+            shape = RoundedCornerShape(4.dp),
+            color = MaterialTheme.colorScheme.tertiaryContainer,
+            modifier = modifier
+        ) {
+            Text(
+                text = "HyperOS",
+                style = MaterialTheme.typography.labelSmall,
+                color = MaterialTheme.colorScheme.onTertiaryContainer,
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier.padding(horizontal = 5.dp, vertical = 2.dp),
+                fontSize = 10.sp
+            )
+        }
+    } else if (isHuawei) {
+        Surface(
+            shape = RoundedCornerShape(4.dp),
+            color = MaterialTheme.colorScheme.errorContainer,
+            modifier = modifier
+        ) {
+            Text(
+                text = "HarmonyOS",
+                style = MaterialTheme.typography.labelSmall,
+                color = MaterialTheme.colorScheme.onErrorContainer,
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier.padding(horizontal = 5.dp, vertical = 2.dp),
+                fontSize = 10.sp
+            )
+        }
+    }
 }
