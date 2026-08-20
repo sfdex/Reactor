@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -77,7 +78,8 @@ import com.sfdex.gmbioreactor.ui.viewmodel.AppListViewModel
 @Composable
 fun SettingsScreen(
     appListViewModel: AppListViewModel,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    scrollState: ScrollState = rememberScrollState()
 ) {
     val state by appListViewModel.uiState.collectAsState()
     val context = LocalContext.current
@@ -86,8 +88,6 @@ fun SettingsScreen(
     var showImportDialog by remember { mutableStateOf(false) }
     var exportJsonContent by remember { mutableStateOf("") }
     var importJsonContent by remember { mutableStateOf("") }
-
-    val scrollState = rememberScrollState()
 
     Column(
         modifier = modifier

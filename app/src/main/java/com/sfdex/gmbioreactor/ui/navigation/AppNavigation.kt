@@ -4,6 +4,12 @@ import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
+import androidx.compose.foundation.layout.statusBars
+import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Android
@@ -28,7 +34,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.sfdex.gmbioreactor.ui.screens.AppListScreen
 import com.sfdex.gmbioreactor.ui.screens.ModelLibraryScreen
@@ -85,6 +93,11 @@ fun AppNavigation(
 
     val appListState by appListViewModel.uiState.collectAsState()
     val modelLibraryState by modelLibraryViewModel.uiState.collectAsState()
+
+    // Persistent scroll & UI states for each tab across navigation
+    val appListScrollState = rememberLazyListState()
+    val modelLibraryScrollState = rememberLazyListState()
+    val settingsScrollState = rememberScrollState()
 
     // Handle system back navigation
     BackHandler(enabled = navState.canPop) {
@@ -177,6 +190,7 @@ fun AppNavigation(
                 AppRoute.AppList -> {
                     AppListScreen(
                         viewModel = appListViewModel,
+                        listState = appListScrollState,
                         onNavigateToPicker = { pkg, name ->
                             navState.navigate(AppRoute.ModelPicker(packageName = pkg, appName = name))
                         }
@@ -185,7 +199,8 @@ fun AppNavigation(
 
                 AppRoute.ModelLibrary -> {
                     ModelLibraryScreen(
-                        viewModel = modelLibraryViewModel
+                        viewModel = modelLibraryViewModel,
+                        listState = modelLibraryScrollState
                     )
                 }
 
@@ -201,7 +216,8 @@ fun AppNavigation(
 
                 AppRoute.Settings -> {
                     SettingsScreen(
-                        appListViewModel = appListViewModel
+                        appListViewModel = appListViewModel,
+                        scrollState = settingsScrollState
                     )
                 }
             }

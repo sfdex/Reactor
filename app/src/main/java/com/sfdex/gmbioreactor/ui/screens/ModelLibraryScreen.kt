@@ -1,5 +1,6 @@
 package com.sfdex.gmbioreactor.ui.screens
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -14,8 +15,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -61,131 +64,140 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.sfdex.gmbioreactor.data.model.DeviceProfile
 import com.sfdex.gmbioreactor.ui.viewmodel.ModelLibraryViewModel
 
 /**
- * Modern Material 3 Model Library Screen with presets and custom profile management.
+ * Modern Material 3 Model Library Screen with full-screen scrolling and sticky brand chips.
  */
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun ModelLibraryScreen(
     viewModel: ModelLibraryViewModel,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    listState: LazyListState = rememberLazyListState()
 ) {
     val state by viewModel.uiState.collectAsState()
     var profileToDelete by remember { mutableStateOf<DeviceProfile?>(null) }
 
-    Scaffold(
-        floatingActionButton = {
-            ExtendedFloatingActionButton(
-                onClick = { viewModel.startCreateNewProfile() },
-                icon = { Icon(Icons.Default.Add, contentDescription = "新增机型") },
-                text = { Text("新增自定义机型") },
-                containerColor = MaterialTheme.colorScheme.primaryContainer,
-                contentColor = MaterialTheme.colorScheme.onPrimaryContainer,
-                shape = RoundedCornerShape(16.dp)
-            )
-        }
-    ) { padding ->
-        Column(
-            modifier = modifier
-                .fillMaxSize()
-                .padding(padding)
-                .padding(horizontal = 16.dp)
+    Box(modifier = modifier.fillMaxSize()) {
+        LazyColumn(
+            state = listState,
+            modifier = Modifier.fillMaxSize(),
+            contentPadding = PaddingValues(bottom = 88.dp)
         ) {
-            Spacer(modifier = Modifier.height(12.dp))
-
-            // Search Bar
-            OutlinedTextField(
-                value = state.searchQuery,
-                onValueChange = { viewModel.setSearchQuery(it) },
-                modifier = Modifier.fillMaxWidth(),
-                placeholder = { Text("搜索品牌、机型名称、型号或代号...") },
-                leadingIcon = {
-                    Icon(
-                        imageVector = Icons.Default.Search,
-                        contentDescription = "搜索",
-                        tint = MaterialTheme.colorScheme.onSurfaceVariant
+            // 1. Search Bar (scrolls naturally with content, non-sticky)
+            item(key = "model_search_bar") {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(start = 16.dp, end = 16.dp, top = 12.dp, bottom = 8.dp)
+                ) {
+                    OutlinedTextField(
+                        value = state.searchQuery,
+                        onValueChange = { viewModel.setSearchQuery(it) },
+                        modifier = Modifier.fillMaxWidth(),
+                        placeholder = { Text("搜索品牌、机型名称、型号或代号...") },
+                        leadingIcon = {
+                            Icon(
+                                imageVector = Icons.Default.Search,
+                                contentDescription = "搜索",
+                                tint = MaterialTheme.colorScheme.onSurfaceVariant
+                            )
+                        },
+                        trailingIcon = {
+                            if (state.searchQuery.isNotEmpty()) {
+                                IconButton(onClick = { viewModel.setSearchQuery("") }) {
+                                    Icon(Icons.Default.Clear, contentDescription = "清空搜索")
+                                }
+                            }
+                        },
+                        shape = RoundedCornerShape(14.dp),
+                        singleLine = true
                     )
-                },
-                trailingIcon = {
-                    if (state.searchQuery.isNotEmpty()) {
-                        IconButton(onClick = { viewModel.setSearchQuery("") }) {
-                            Icon(Icons.Default.Clear, contentDescription = "清空搜索")
+                }
+            }
+
+            // 2. Brand Filter Chips & Summary Row (stickyHeader - sticks to top upon scrolling)
+            stickyHeader(key = "brand_chips_bar") {
+                Surface(
+                    modifier = Modifier.fillMaxWidth(),
+                    color = MaterialTheme.colorScheme.surface,
+                    tonalElevation = 2.dp
+                ) {
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(start = 16.dp, end = 16.dp, top = 6.dp, bottom = 8.dp)
+                    ) {
+                        LazyRow(
+                            horizontalArrangement = Arrangement.spacedBy(8.dp),
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
+                            items(state.brandNames) { brand ->
+                                val isSelected = (brand == ModelLibraryViewModel.BRAND_ALL && state.selectedBrand == null) ||
+                                        (state.selectedBrand == brand)
+                                FilterChip(
+                                    selected = isSelected,
+                                    onClick = { viewModel.selectBrand(brand) },
+                                    label = { Text(brand) },
+                                    shape = RoundedCornerShape(10.dp),
+                                    colors = FilterChipDefaults.filterChipColors(
+                                        selectedContainerColor = MaterialTheme.colorScheme.primaryContainer,
+                                        selectedLabelColor = MaterialTheme.colorScheme.onPrimaryContainer
+                                    )
+                                )
+                            }
+                        }
+
+                        Spacer(modifier = Modifier.height(6.dp))
+
+                        // Summary row
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Text(
+                                text = "显示 ${state.displayedProfiles.size} 款机型预设",
+                                style = MaterialTheme.typography.bodySmall,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant
+                            )
+
+                            if (state.customProfiles.isNotEmpty()) {
+                                Text(
+                                    text = "自定义: ${state.customProfiles.size} 款",
+                                    style = MaterialTheme.typography.labelSmall,
+                                    color = MaterialTheme.colorScheme.secondary,
+                                    fontWeight = FontWeight.Medium
+                                )
+                            }
                         }
                     }
-                },
-                shape = RoundedCornerShape(14.dp),
-                singleLine = true
-            )
-
-            Spacer(modifier = Modifier.height(8.dp))
-
-            // Brand Filter Chips
-            LazyRow(
-                horizontalArrangement = Arrangement.spacedBy(8.dp),
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                items(state.brandNames) { brand ->
-                    val isSelected = (brand == ModelLibraryViewModel.BRAND_ALL && state.selectedBrand == null) ||
-                            (state.selectedBrand == brand)
-                    FilterChip(
-                        selected = isSelected,
-                        onClick = { viewModel.selectBrand(brand) },
-                        label = { Text(brand) },
-                        shape = RoundedCornerShape(10.dp),
-                        colors = FilterChipDefaults.filterChipColors(
-                            selectedContainerColor = MaterialTheme.colorScheme.primaryContainer,
-                            selectedLabelColor = MaterialTheme.colorScheme.onPrimaryContainer
-                        )
-                    )
                 }
             }
 
-            Spacer(modifier = Modifier.height(8.dp))
-
-            // Summary row
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text(
-                    text = "显示 ${state.displayedProfiles.size} 款机型预设",
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
-                )
-
-                if (state.customProfiles.isNotEmpty()) {
-                    Text(
-                        text = "自定义: ${state.customProfiles.size} 款",
-                        style = MaterialTheme.typography.labelSmall,
-                        color = MaterialTheme.colorScheme.secondary,
-                        fontWeight = FontWeight.Medium
-                    )
-                }
-            }
-
-            Spacer(modifier = Modifier.height(6.dp))
-
-            // Content
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .weight(1f)
-            ) {
-                if (state.isLoading) {
+            // 3. Content Area (Loading, Empty, or Profile Cards)
+            if (state.isLoading) {
+                item(key = "loading_indicator") {
                     Box(
-                        modifier = Modifier.fillMaxSize(),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(vertical = 48.dp),
                         contentAlignment = Alignment.Center
                     ) {
                         CircularProgressIndicator(strokeWidth = 3.dp)
                     }
-                } else if (state.displayedProfiles.isEmpty()) {
+                }
+            } else if (state.displayedProfiles.isEmpty()) {
+                item(key = "empty_indicator") {
                     Box(
-                        modifier = Modifier.fillMaxSize(),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(vertical = 48.dp),
                         contentAlignment = Alignment.Center
                     ) {
                         Column(
@@ -215,28 +227,41 @@ fun ModelLibraryScreen(
                             }
                         }
                     }
-                } else {
-                    LazyColumn(
-                        verticalArrangement = Arrangement.spacedBy(10.dp),
-                        contentPadding = PaddingValues(bottom = 80.dp),
-                        modifier = Modifier.fillMaxSize()
+                }
+            } else {
+                items(
+                    state.displayedProfiles,
+                    key = { "${it.manufacturer}_${it.brand}_${it.model}_${it.name}_${it.device}" }
+                ) { profile ->
+                    val isCustom = state.customProfiles.any { it.name.equals(profile.name, ignoreCase = true) }
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(start = 16.dp, end = 16.dp, top = 5.dp, bottom = 5.dp)
                     ) {
-                        items(
-                            state.displayedProfiles,
-                            key = { "${it.manufacturer}_${it.brand}_${it.model}_${it.name}_${it.device}" }
-                        ) { profile ->
-                            val isCustom = state.customProfiles.any { it.name.equals(profile.name, ignoreCase = true) }
-                            DeviceProfileCard(
-                                profile = profile,
-                                isCustom = isCustom,
-                                onEdit = { viewModel.startEditProfile(profile) },
-                                onDelete = { profileToDelete = profile }
-                            )
-                        }
+                        DeviceProfileCard(
+                            profile = profile,
+                            isCustom = isCustom,
+                            onEdit = { viewModel.startEditProfile(profile) },
+                            onDelete = { profileToDelete = profile }
+                        )
                     }
                 }
             }
         }
+
+        // Floating Action Button
+        ExtendedFloatingActionButton(
+            onClick = { viewModel.startCreateNewProfile() },
+            icon = { Icon(Icons.Default.Add, contentDescription = "新增机型") },
+            text = { Text("新增自定义机型") },
+            containerColor = MaterialTheme.colorScheme.primaryContainer,
+            contentColor = MaterialTheme.colorScheme.onPrimaryContainer,
+            shape = RoundedCornerShape(16.dp),
+            modifier = Modifier
+                .align(Alignment.BottomEnd)
+                .padding(16.dp)
+        )
     }
 
     // Create / Edit Profile Dialog

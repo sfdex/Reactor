@@ -7,6 +7,7 @@ import android.graphics.drawable.Drawable
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -23,8 +24,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -76,6 +79,7 @@ import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.sfdex.gmbioreactor.ui.viewmodel.AppDisplayItem
@@ -147,127 +151,149 @@ fun AppIconImage(
 }
 
 /**
- * Modern Material 3 Application List Screen.
+ * Modern Material 3 Application List Screen with full-screen scrolling and sticky filter row.
  */
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun AppListScreen(
     viewModel: AppListViewModel,
     onNavigateToPicker: (packageName: String, appName: String) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    listState: LazyListState = rememberLazyListState()
 ) {
     val state by viewModel.uiState.collectAsState()
 
-    Column(
-        modifier = modifier
-            .fillMaxSize()
-            .padding(horizontal = 16.dp)
+    LazyColumn(
+        state = listState,
+        modifier = modifier.fillMaxSize(),
+        contentPadding = PaddingValues(bottom = 24.dp)
     ) {
-        Spacer(modifier = Modifier.height(12.dp))
-
-        // Status Header Card
-        AppListStatusHeaderCard(
-            state = state,
-            onRefresh = {
-                viewModel.refreshRootStatus()
-                viewModel.loadData()
-            },
-            onRestartAll = {
-                viewModel.forceStopAllEnabled()
-            }
-        )
-
-        Spacer(modifier = Modifier.height(12.dp))
-
-        // Search Bar
-        OutlinedTextField(
-            value = state.searchQuery,
-            onValueChange = { viewModel.setSearchQuery(it) },
-            modifier = Modifier.fillMaxWidth(),
-            placeholder = { Text("搜索应用名、包名或伪装型号...") },
-            leadingIcon = {
-                Icon(
-                    imageVector = Icons.Default.Search,
-                    contentDescription = "搜索",
-                    tint = MaterialTheme.colorScheme.onSurfaceVariant
+        // 1. Status Header Card (scrolls naturally with content)
+        item(key = "status_header") {
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(start = 16.dp, end = 16.dp, top = 12.dp, bottom = 12.dp)
+            ) {
+                AppListStatusHeaderCard(
+                    state = state,
+                    onRefresh = {
+                        viewModel.refreshRootStatus()
+                        viewModel.loadData()
+                    },
+                    onRestartAll = {
+                        viewModel.forceStopAllEnabled()
+                    }
                 )
-            },
-            trailingIcon = {
-                if (state.searchQuery.isNotEmpty()) {
-                    IconButton(onClick = { viewModel.setSearchQuery("") }) {
+            }
+        }
+
+        // 2. Search Bar (scrolls naturally with content, non-sticky)
+        item(key = "search_bar") {
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(start = 16.dp, end = 16.dp, bottom = 8.dp)
+            ) {
+                OutlinedTextField(
+                    value = state.searchQuery,
+                    onValueChange = { viewModel.setSearchQuery(it) },
+                    modifier = Modifier.fillMaxWidth(),
+                    placeholder = { Text("搜索应用名、包名或伪装型号...") },
+                    leadingIcon = {
                         Icon(
-                            imageVector = Icons.Default.Clear,
-                            contentDescription = "清空搜索"
+                            imageVector = Icons.Default.Search,
+                            contentDescription = "搜索",
+                            tint = MaterialTheme.colorScheme.onSurfaceVariant
                         )
+                    },
+                    trailingIcon = {
+                        if (state.searchQuery.isNotEmpty()) {
+                            IconButton(onClick = { viewModel.setSearchQuery("") }) {
+                                Icon(
+                                    imageVector = Icons.Default.Clear,
+                                    contentDescription = "清空搜索"
+                                )
+                            }
+                        }
+                    },
+                    shape = RoundedCornerShape(14.dp),
+                    singleLine = true
+                )
+            }
+        }
+
+        // 3. Filter Chips & Count Row (stickyHeader - sticks to top upon scrolling)
+        stickyHeader(key = "filter_chips_bar") {
+            Surface(
+                modifier = Modifier.fillMaxWidth(),
+                color = MaterialTheme.colorScheme.surface,
+                tonalElevation = 2.dp
+            ) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(start = 16.dp, end = 16.dp, top = 6.dp, bottom = 8.dp)
+                ) {
+                    LazyRow(
+                        horizontalArrangement = Arrangement.spacedBy(8.dp),
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        items(AppFilterType.entries) { filter ->
+                            val count = when (filter) {
+                                AppFilterType.ALL -> state.allApps.size
+                                AppFilterType.USER -> state.allApps.count { !it.isSystemApp }
+                                AppFilterType.SYSTEM -> state.allApps.count { it.isSystemApp }
+                                AppFilterType.CONFIGURED -> state.allApps.count { it.isSpoofConfigured }
+                            }
+                            FilterChip(
+                                selected = state.filterType == filter,
+                                onClick = { viewModel.setFilterType(filter) },
+                                label = { Text("${filter.label} ($count)") },
+                                shape = RoundedCornerShape(10.dp),
+                                colors = FilterChipDefaults.filterChipColors(
+                                    selectedContainerColor = MaterialTheme.colorScheme.primaryContainer,
+                                    selectedLabelColor = MaterialTheme.colorScheme.onPrimaryContainer
+                                )
+                            )
+                        }
+                    }
+
+                    Spacer(modifier = Modifier.height(6.dp))
+
+                    // App list count & quick summary
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Text(
+                            text = "显示 ${state.displayedApps.size} 个应用",
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+
+                        val configuredCount = state.allApps.count { it.isSpoofConfigured && it.isSpoofEnabled }
+                        if (configuredCount > 0) {
+                            Text(
+                                text = "已启用伪装: $configuredCount",
+                                style = MaterialTheme.typography.labelSmall,
+                                color = MaterialTheme.colorScheme.primary,
+                                fontWeight = FontWeight.SemiBold
+                            )
+                        }
                     }
                 }
-            },
-            shape = RoundedCornerShape(14.dp),
-            singleLine = true
-        )
-
-        Spacer(modifier = Modifier.height(8.dp))
-
-        // Filter Chips Row
-        LazyRow(
-            horizontalArrangement = Arrangement.spacedBy(8.dp),
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            items(AppFilterType.entries) { filter ->
-                val count = when (filter) {
-                    AppFilterType.ALL -> state.allApps.size
-                    AppFilterType.USER -> state.allApps.count { !it.isSystemApp }
-                    AppFilterType.SYSTEM -> state.allApps.count { it.isSystemApp }
-                    AppFilterType.CONFIGURED -> state.allApps.count { it.isSpoofConfigured }
-                }
-                FilterChip(
-                    selected = state.filterType == filter,
-                    onClick = { viewModel.setFilterType(filter) },
-                    label = { Text("${filter.label} ($count)") },
-                    shape = RoundedCornerShape(10.dp),
-                    colors = FilterChipDefaults.filterChipColors(
-                        selectedContainerColor = MaterialTheme.colorScheme.primaryContainer,
-                        selectedLabelColor = MaterialTheme.colorScheme.onPrimaryContainer
-                    )
-                )
             }
         }
 
-        Spacer(modifier = Modifier.height(8.dp))
-
-        // App list count & quick summary
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Text(
-                text = "显示 ${state.displayedApps.size} 个应用",
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
-            )
-
-            val configuredCount = state.allApps.count { it.isSpoofConfigured && it.isSpoofEnabled }
-            if (configuredCount > 0) {
-                Text(
-                    text = "已启用伪装: $configuredCount",
-                    style = MaterialTheme.typography.labelSmall,
-                    color = MaterialTheme.colorScheme.primary,
-                    fontWeight = FontWeight.SemiBold
-                )
-            }
-        }
-
-        Spacer(modifier = Modifier.height(6.dp))
-
-        // Content Area
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .weight(1f)
-        ) {
-            if (state.isLoading) {
+        // 4. Content Area (Loading, Empty, or App Items)
+        if (state.isLoading) {
+            item(key = "loading_state") {
                 Box(
-                    modifier = Modifier.fillMaxSize(),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 48.dp),
                     contentAlignment = Alignment.Center
                 ) {
                     Column(
@@ -282,9 +308,13 @@ fun AppListScreen(
                         )
                     }
                 }
-            } else if (state.displayedApps.isEmpty()) {
+            }
+        } else if (state.displayedApps.isEmpty()) {
+            item(key = "empty_state") {
                 Box(
-                    modifier = Modifier.fillMaxSize(),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 48.dp),
                     contentAlignment = Alignment.Center
                 ) {
                     Column(
@@ -315,29 +345,29 @@ fun AppListScreen(
                         }
                     }
                 }
-            } else {
-                LazyColumn(
-                    verticalArrangement = Arrangement.spacedBy(10.dp),
-                    contentPadding = PaddingValues(bottom = 24.dp),
-                    modifier = Modifier.fillMaxSize()
+            }
+        } else {
+            items(state.displayedApps, key = { it.packageName }) { appItem ->
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(start = 16.dp, end = 16.dp, top = 5.dp, bottom = 5.dp)
                 ) {
-                    items(state.displayedApps, key = { it.packageName }) { appItem ->
-                        AppItemCard(
-                            appItem = appItem,
-                            onToggleSpoof = { enabled ->
-                                viewModel.toggleAppSpoof(appItem.packageName, enabled)
-                            },
-                            onRemoveSpoof = {
-                                viewModel.removeAppSpoof(appItem.packageName)
-                            },
-                            onForceStop = {
-                                viewModel.forceStopApp(appItem.packageName)
-                            },
-                            onClick = {
-                                onNavigateToPicker(appItem.packageName, appItem.appName)
-                            }
-                        )
-                    }
+                    AppItemCard(
+                        appItem = appItem,
+                        onToggleSpoof = { enabled ->
+                            viewModel.toggleAppSpoof(appItem.packageName, enabled)
+                        },
+                        onRemoveSpoof = {
+                            viewModel.removeAppSpoof(appItem.packageName)
+                        },
+                        onForceStop = {
+                            viewModel.forceStopApp(appItem.packageName)
+                        },
+                        onClick = {
+                            onNavigateToPicker(appItem.packageName, appItem.appName)
+                        }
+                    )
                 }
             }
         }
