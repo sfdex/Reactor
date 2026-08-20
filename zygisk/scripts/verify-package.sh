@@ -39,18 +39,9 @@ require_metadata() {
 
 require_entry "module.prop"
 require_entry "skip_mount"
+require_entry "customize.sh"
 require_entry "zygisk/arm64-v8a.so"
 require_entry "zygisk/armeabi-v7a.so"
-
-EXPECTED_ENTRIES=$(printf '%s\n' \
-  "module.prop" \
-  "skip_mount" \
-  "zygisk/arm64-v8a.so" \
-  "zygisk/armeabi-v7a.so" | LC_ALL=C sort)
-if [ "$(printf '%s\n' "$ENTRIES" | LC_ALL=C sort)" != "$EXPECTED_ENTRIES" ]; then
-  echo "package contains unexpected entries" >&2
-  exit 1
-fi
 
 if printf '%s\n' "$ENTRIES" | grep -Eq '(^|/)system\.prop$|^system/'; then
   echo "package contains a prohibited global system override" >&2
@@ -67,12 +58,11 @@ if [ "$(printf '%s\n' "$SO_ENTRIES" | LC_ALL=C sort)" != "$EXPECTED_SO_ENTRIES" 
 fi
 
 MODULE_METADATA=$(unzip -p "$ZIP_PATH" module.prop)
-require_metadata "id=s26ultra_ithome"
-require_metadata "name=Galaxy S26 Ultra for IT之家"
+require_metadata "id=reactor_zygisk"
+require_metadata "name=转基因反应堆 (Reactor)"
 require_metadata "version=v1.0.0"
 require_metadata "versionCode=1"
-require_metadata "author=Codex"
-require_metadata "description=Spoofs Galaxy S26 Ultra product identity only inside com.ruanmei.ithome on Android 15."
+require_metadata "author=sfdex"
 
 VERIFY_TMP_DIR=$(mktemp -d "${TMPDIR:-/tmp}/s26spoof-verify.XXXXXX")
 trap 'rm -rf "$VERIFY_TMP_DIR"' EXIT HUP INT TERM

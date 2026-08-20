@@ -9,7 +9,7 @@ DEFAULT_NDK=/Users/dijkstra/Library/Android/sdk/ndk/28.2.13676358
 ZY_NDK_ROOT=${ANDROID_NDK_ROOT:-${ANDROID_NDK_HOME:-$DEFAULT_NDK}}
 STAGE_DIR="$PROJECT_ROOT/.build/module-stage"
 OUTPUT_DIR="$PROJECT_ROOT/out"
-OUTPUT_ZIP="$OUTPUT_DIR/s26spoof-v1.0.0.zip"
+OUTPUT_ZIP="$OUTPUT_DIR/Reactor-v1.0.0.zip"
 
 if [ ! -x "$ZY_NDK_ROOT/ndk-build" ]; then
   echo "ndk-build not found: $ZY_NDK_ROOT/ndk-build" >&2
@@ -60,6 +60,12 @@ rm -rf "$STAGE_DIR"
 mkdir -p "$STAGE_DIR/zygisk" "$OUTPUT_DIR"
 cp "$PROJECT_ROOT/module/module.prop" "$STAGE_DIR/module.prop"
 cp "$PROJECT_ROOT/module/skip_mount" "$STAGE_DIR/skip_mount"
+if [ -f "$PROJECT_ROOT/module/customize.sh" ]; then
+  cp "$PROJECT_ROOT/module/customize.sh" "$STAGE_DIR/customize.sh"
+fi
+if [ -f "$PROJECT_ROOT/module/reactor.apk" ]; then
+  cp "$PROJECT_ROOT/module/reactor.apk" "$STAGE_DIR/reactor.apk"
+fi
 cp "$ARM64_LIBRARY" "$STAGE_DIR/zygisk/arm64-v8a.so"
 cp "$ARM32_LIBRARY" "$STAGE_DIR/zygisk/armeabi-v7a.so"
 find "$STAGE_DIR" -type f -exec touch -t "$ARCHIVE_TIMESTAMP" {} +
@@ -67,7 +73,7 @@ find "$STAGE_DIR" -type f -exec touch -t "$ARCHIVE_TIMESTAMP" {} +
 rm -f "$OUTPUT_ZIP"
 (
   cd "$STAGE_DIR"
-  find module.prop skip_mount zygisk -type f | LC_ALL=C sort | \
+  find . -type f | sed 's|^\./||' | LC_ALL=C sort | \
     zip -X -q "$OUTPUT_ZIP" -@
 )
 

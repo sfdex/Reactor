@@ -1,6 +1,6 @@
-id=s26ultra_ithome
-name=Galaxy S26 Ultra for IT之家
+id=reactor_zygisk
+name=转基因反应堆 (Reactor)
 version=v1.0.0
 versionCode=1
-author=Codex
-description=Spoofs Galaxy S26 Ultra product identity only inside com.ruanmei.ithome on Android 15.
+author=sfdex
+description=转基因反应堆 Zygisk Native 拦截模块，支持按应用细粒度转基因修改设备硬件与系统型号信息。
