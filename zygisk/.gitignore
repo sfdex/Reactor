@@ -1,0 +1,7 @@
+.worktrees/
+.build/
+.test-bin/
+module/libs/
+module/obj/
+out/
+.DS_Store
