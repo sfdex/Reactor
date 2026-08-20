@@ -45,9 +45,11 @@ object RootEngine {
     const val CONFIG_TMP_FILE = "$CONFIG_DIR/config.json.tmp"
 
     val MODULE_DIRS = listOf(
+        "/data/adb/modules/reactor_zygisk",
+        "/data/adb/modules/reactor",
+        "/data/adb/modules/gmbioreactor",
         "/data/adb/modules/s26ultra_ithome",
-        "/data/adb/modules/s26spoof",
-        "/data/adb/modules/gmbioreactor"
+        "/data/adb/modules/s26spoof"
     )
 
     private var cachedRootAvailable: Boolean? = null
