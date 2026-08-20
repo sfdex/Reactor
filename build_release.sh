@@ -12,13 +12,13 @@ echo "=========================================="
 
 mkdir -p "$OUT_DIR"
 
-# 1. 编译 Android 控制端 APK
+# 1. 编译 Android 控制端 APK (开启 R8 混淆压缩与资源缩减)
 echo ""
-echo ">> [1/3] 正在编译 Android 控制端 App (Gradle)..."
+echo ">> [1/3] 正在编译 Android 控制端 Release App (开启 R8 极速压缩)..."
 cd "$ROOT_DIR"
-./gradlew :app:assembleDebug
+./gradlew :app:assembleRelease
 
-APK_SOURCE="$ROOT_DIR/app/build/outputs/apk/debug/app-debug.apk"
+APK_SOURCE="$ROOT_DIR/app/build/outputs/apk/release/app-release.apk"
 if [ ! -f "$APK_SOURCE" ]; then
     echo "错误: 未找到生成的 APK 文件: $APK_SOURCE" >&2
     exit 1
