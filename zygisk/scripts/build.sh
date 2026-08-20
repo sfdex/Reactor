@@ -50,9 +50,8 @@ fi
 "$ZY_NDK_ROOT/ndk-build" -C "$PROJECT_ROOT/module" -j1
 
 ARM64_LIBRARY="$PROJECT_ROOT/module/libs/arm64-v8a/libs26spoof.so"
-ARM32_LIBRARY="$PROJECT_ROOT/module/libs/armeabi-v7a/libs26spoof.so"
-if [ ! -f "$ARM64_LIBRARY" ] || [ ! -f "$ARM32_LIBRARY" ]; then
-  echo "one or more Zygisk ABI libraries were not produced" >&2
+if [ ! -f "$ARM64_LIBRARY" ]; then
+  echo "Zygisk arm64-v8a library was not produced" >&2
   exit 1
 fi
 
@@ -67,7 +66,6 @@ if [ -f "$PROJECT_ROOT/module/reactor.apk" ]; then
   cp "$PROJECT_ROOT/module/reactor.apk" "$STAGE_DIR/reactor.apk"
 fi
 cp "$ARM64_LIBRARY" "$STAGE_DIR/zygisk/arm64-v8a.so"
-cp "$ARM32_LIBRARY" "$STAGE_DIR/zygisk/armeabi-v7a.so"
 find "$STAGE_DIR" -type f -exec touch -t "$ARCHIVE_TIMESTAMP" {} +
 
 rm -f "$OUTPUT_ZIP"

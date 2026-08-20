@@ -41,7 +41,6 @@ require_entry "module.prop"
 require_entry "skip_mount"
 require_entry "customize.sh"
 require_entry "zygisk/arm64-v8a.so"
-require_entry "zygisk/armeabi-v7a.so"
 
 if printf '%s\n' "$ENTRIES" | grep -Eq '(^|/)system\.prop$|^system/'; then
   echo "package contains a prohibited global system override" >&2
@@ -49,9 +48,7 @@ if printf '%s\n' "$ENTRIES" | grep -Eq '(^|/)system\.prop$|^system/'; then
 fi
 
 SO_ENTRIES=$(printf '%s\n' "$ENTRIES" | grep -E '\.so$' || true)
-EXPECTED_SO_ENTRIES=$(printf '%s\n' \
-  "zygisk/arm64-v8a.so" \
-  "zygisk/armeabi-v7a.so" | LC_ALL=C sort)
+EXPECTED_SO_ENTRIES="zygisk/arm64-v8a.so"
 if [ "$(printf '%s\n' "$SO_ENTRIES" | LC_ALL=C sort)" != "$EXPECTED_SO_ENTRIES" ]; then
   echo "package contains unexpected or missing shared libraries" >&2
   exit 1
@@ -64,10 +61,10 @@ require_metadata "version=v1.0.0"
 require_metadata "versionCode=1"
 require_metadata "author=sfdex"
 
-VERIFY_TMP_DIR=$(mktemp -d "${TMPDIR:-/tmp}/s26spoof-verify.XXXXXX")
+VERIFY_TMP_DIR=$(mktemp -d "${TMPDIR:-/tmp}/reactor-verify.XXXXXX")
 trap 'rm -rf "$VERIFY_TMP_DIR"' EXIT HUP INT TERM
 
-for ABI in arm64-v8a armeabi-v7a; do
+for ABI in arm64-v8a; do
   unzip -p "$ZIP_PATH" "zygisk/$ABI.so" > "$VERIFY_TMP_DIR/$ABI.so"
   if ! "$READELF" -Ws "$VERIFY_TMP_DIR/$ABI.so" | awk '
     $4 == "FUNC" && $5 == "GLOBAL" && $6 == "DEFAULT" &&
