@@ -4,13 +4,13 @@ plugins {
 }
 
 android {
-    namespace = "com.sfdex.gmbioreactor"
+    namespace = "com.sfdex.reactor"
     compileSdk {
         version = release(37)
     }
 
     defaultConfig {
-        applicationId = "com.sfdex.gmbioreactor"
+        applicationId = "com.sfdex.reactor"
         minSdk = 24
         targetSdk = 37
         versionCode = 1
