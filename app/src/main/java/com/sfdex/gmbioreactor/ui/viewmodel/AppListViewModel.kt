@@ -174,7 +174,7 @@ class AppListViewModel(
             if (result.isSuccess) {
                 _uiState.update {
                     it.copy(
-                        statusMessage = "已${if (enabled) "启用" else "暂停"} $packageName 的机型伪装",
+                        statusMessage = "已${if (enabled) "启用" else "暂停"} $packageName 的机型转基因",
                         isSuccessMessage = true
                     )
                 }
@@ -229,7 +229,7 @@ class AppListViewModel(
             if (result.isSuccess) {
                 _uiState.update {
                     it.copy(
-                        statusMessage = "已取消 $packageName 的机型伪装",
+                        statusMessage = "已取消 $packageName 的机型转基因",
                         isSuccessMessage = true
                     )
                 }
@@ -281,7 +281,7 @@ class AppListViewModel(
             if (enabledPkgs.isEmpty()) {
                 _uiState.update {
                     it.copy(
-                        statusMessage = "当前没有启用伪装的应用",
+                        statusMessage = "当前没有启用转基因的应用",
                         isSuccessMessage = true
                     )
                 }
@@ -293,7 +293,7 @@ class AppListViewModel(
             if (success) {
                 _uiState.update {
                     it.copy(
-                        statusMessage = "已重启 ${enabledPkgs.size} 个伪装应用进程",
+                        statusMessage = "已重启 ${enabledPkgs.size} 个转基因应用进程",
                         isSuccessMessage = true
                     )
                 }

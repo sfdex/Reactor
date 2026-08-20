@@ -233,7 +233,7 @@ fun SettingsScreen(
                     Spacer(modifier = Modifier.width(12.dp))
                     Column {
                         Text(
-                            text = "伪装应用统计",
+                            text = "转基因应用统计",
                             style = MaterialTheme.typography.bodyMedium,
                             fontWeight = FontWeight.SemiBold
                         )
@@ -280,7 +280,7 @@ fun SettingsScreen(
                 ) {
                     Icon(Icons.Default.PowerSettingsNew, contentDescription = null, modifier = Modifier.size(18.dp))
                     Spacer(modifier = Modifier.width(8.dp))
-                    Text("重启所有已开启伪装的应用进程")
+                    Text("重启所有已开启转基因的应用进程")
                 }
 
                 // Rescan Apps & Config
@@ -396,7 +396,7 @@ fun SettingsScreen(
                 )
 
                 Text(
-                    text = "转基因反应堆（GMBioreactor）是基于 Zygisk Native 拦截技术的 Android 设备型号伪装框架。通过在应用进程创建阶段拦截 libc 系统属性读取及 android.os.Build JNI 反射调用，实现免重启、按应用细粒度伪装设备硬件信息。",
+                    text = "转基因反应堆（GMBioreactor）是基于 Zygisk Native 拦截技术的 Android 设备型号转基因框架。通过在应用进程创建阶段拦截 libc 系统属性读取及 android.os.Build JNI 反射调用，实现免重启、按应用细粒度转基因设备硬件信息。",
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     lineHeight = 18.sp

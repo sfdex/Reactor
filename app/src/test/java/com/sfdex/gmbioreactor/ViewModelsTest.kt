@@ -368,7 +368,7 @@ class ViewModelsTest {
         viewModel.forceStopAllEnabled()
         val msg = viewModel.uiState.value.statusMessage
         assertNotNull(msg)
-        assertTrue(msg!!.contains("当前没有启用伪装的应用"))
+        assertTrue(msg!!.contains("当前没有启用转基因的应用"))
     }
 
     @Test

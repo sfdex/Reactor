@@ -199,7 +199,7 @@ fun AppListScreen(
                     value = state.searchQuery,
                     onValueChange = { viewModel.setSearchQuery(it) },
                     modifier = Modifier.fillMaxWidth(),
-                    placeholder = { Text("搜索应用名、包名或伪装型号...") },
+                    placeholder = { Text("搜索应用名、包名或转基因型号...") },
                     leadingIcon = {
                         Icon(
                             imageVector = Icons.Default.Search,
@@ -276,7 +276,7 @@ fun AppListScreen(
                         val configuredCount = state.allApps.count { it.isSpoofConfigured && it.isSpoofEnabled }
                         if (configuredCount > 0) {
                             Text(
-                                text = "已启用伪装: $configuredCount",
+                                text = "已启用转基因: $configuredCount",
                                 style = MaterialTheme.typography.labelSmall,
                                 color = MaterialTheme.colorScheme.primary,
                                 fontWeight = FontWeight.SemiBold
@@ -672,7 +672,7 @@ fun AppItemCard(
                         Spacer(modifier = Modifier.width(6.dp))
                         Column {
                             Text(
-                                text = "伪装: ${appItem.spoofProfile.name.ifBlank { appItem.spoofProfile.model }}",
+                                text = "转基因: ${appItem.spoofProfile.name.ifBlank { appItem.spoofProfile.model }}",
                                 style = MaterialTheme.typography.labelMedium,
                                 fontWeight = FontWeight.SemiBold,
                                 color = if (appItem.isSpoofEnabled)

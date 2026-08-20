@@ -169,7 +169,7 @@ fun ModelPickerScreen(
                         }
                     } else {
                         Text(
-                            text = "当前使用系统原生机型 (未开启伪装)",
+                            text = "当前使用系统原生机型 (未开启转基因)",
                             style = MaterialTheme.typography.labelSmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
