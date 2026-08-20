@@ -127,7 +127,7 @@ fun AppNavigation(
                 title = {
                     Text(
                         text = when (currentRoute) {
-                            AppRoute.AppList -> "GMBioreactor 机型伪装"
+                            AppRoute.AppList -> "转基因反应堆"
                             AppRoute.ModelLibrary -> "机型预设库"
                             is AppRoute.ModelPicker -> "机型配置 · ${currentRoute.appName.ifBlank { currentRoute.packageName }}"
                             AppRoute.Settings -> "运行状态与设置"

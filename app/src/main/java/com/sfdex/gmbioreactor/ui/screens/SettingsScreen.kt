@@ -384,7 +384,7 @@ fun SettingsScreen(
                         modifier = Modifier.size(22.dp)
                     )
                     Text(
-                        text = "关于 GMBioreactor",
+                        text = "关于 转基因反应堆 (GMBioreactor)",
                         style = MaterialTheme.typography.titleMedium,
                         fontWeight = FontWeight.Bold
                     )
@@ -396,7 +396,7 @@ fun SettingsScreen(
                 )
 
                 Text(
-                    text = "GMBioreactor 是基于 Zygisk Native 拦截技术的 Android 设备型号伪装框架。通过在应用进程创建阶段拦截 libc 系统属性读取及 android.os.Build JNI 反射调用，实现免重启、按应用细粒度伪装设备硬件信息。",
+                    text = "转基因反应堆（GMBioreactor）是基于 Zygisk Native 拦截技术的 Android 设备型号伪装框架。通过在应用进程创建阶段拦截 libc 系统属性读取及 android.os.Build JNI 反射调用，实现免重启、按应用细粒度伪装设备硬件信息。",
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     lineHeight = 18.sp
